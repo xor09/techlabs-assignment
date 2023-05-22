@@ -14,7 +14,7 @@ public class PigDiceGame {
 		
 		while(score < requiredScore) {
 			++turn;
-			score += rollDice(0, random, scanner);
+			score += rollDice(0, random, scanner, score, requiredScore);
 			System.out.println("Turn #" + turn + " over.\tYour current score is " + score);
 		}
 		
@@ -23,21 +23,22 @@ public class PigDiceGame {
 	}
 	
 	
-	private static int rollDice(int currentScore, Random random, Scanner scanner) {
+	private static int rollDice(int currentScore, Random random, Scanner scanner, int score, int requiredScore) {
 		System.out.println("To roll a dice press 'r' or to hold press 'h'.");
 		String input = scanner.next();
 		if(input.equalsIgnoreCase("r")) {
 			int dice = random.nextInt(6)+1;
 			System.out.println("dice: " + dice); //check the value of dice
 			if(dice == 1) return 0;
-			return rollDice(currentScore+dice, random, scanner);
+			if(score+currentScore+dice >= requiredScore) return currentScore+dice;
+			return rollDice(currentScore+dice, random, scanner, score, requiredScore);
 		}
 		else if(input.equalsIgnoreCase("h")) {
 			return currentScore;
 		}
 		else {
 			System.out.println("Enter a valid input!");
-			return rollDice(currentScore, random, scanner);
+			return rollDice(currentScore, random, scanner, score, requiredScore);
 		}
 	}
 
