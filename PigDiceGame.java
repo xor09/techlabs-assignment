@@ -5,7 +5,6 @@ import java.util.Random;
 public class PigDiceGame {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Scanner scanner  = new Scanner(System.in);
 		Random random = new Random();
 		
@@ -33,13 +32,12 @@ public class PigDiceGame {
 			if(score+currentScore+dice >= requiredScore) return currentScore+dice;
 			return rollDice(currentScore+dice, random, scanner, score, requiredScore);
 		}
-		else if(input.equalsIgnoreCase("h")) {
+		if(input.equalsIgnoreCase("h")) {
 			return currentScore;
 		}
-		else {
-			System.out.println("Enter a valid input!");
-			return rollDice(currentScore, random, scanner, score, requiredScore);
-		}
+		
+		System.out.println("Enter a valid input!");
+		return rollDice(currentScore, random, scanner, score, requiredScore);
 	}
 
 }
