@@ -22,6 +22,9 @@ class Game {
     }
 
     play(cellno){
+        if(isNaN(cellno)){
+            return "cell number should be an integer"
+        }
         if(cellno >= 9){
             return "invalid Cell number"
         }
