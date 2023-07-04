@@ -38,7 +38,8 @@ public class Operations {
 	        	 preparedStatement.setInt(1, employee.getEmpno());
 	        	 preparedStatement.setString(2, employee.getEname());
 	        	 preparedStatement.setString(3, employee.getJob());
-	        	 preparedStatement.setInt(4, employee.getManager());
+	        	 Integer mgr = employee.getManager()==-1 ? null : employee.getManager();
+	        	 preparedStatement.setObject(4, mgr);
 	        	 preparedStatement.setDate(5, employee.getHiredate());
 	        	 preparedStatement.setDouble(6, employee.getSal());
 	        	 preparedStatement.setDouble(7, employee.getComm());
@@ -163,57 +164,57 @@ public class Operations {
 	 
 // -------------------------------- helper methods -------------------------------
 	 private static Department createDepartment(Scanner scanner) {
-			System.out.println("Enter Department Number.");
-			int deptno = scanner.nextInt(); 
-			
-			System.out.println("Enter Department Name.");
-			String dname = scanner.next();
-			
-			System.out.println("Enter Department Loc");
-			String loc = scanner.next();
-			
-			return new Department(deptno, dname, loc);
-		}
+		System.out.println("Enter Department Number.");
+		int deptno = scanner.nextInt(); 
 		
-		private static Employee createEmployee(Scanner scanner) {
-			System.out.println("Enter employee number.");
-			int empno = scanner.nextInt(); 
-			
-			System.out.println("Enter employee name.");
-			String ename = scanner.next();
-			
-			System.out.println("Enter employee job.");
-			String job = scanner.next();
-			
-			System.out.println("Enter manager's employee number.");
-			int manager = scanner.nextInt(); 
-			
-			System.out.println("Enter Hire Date (YYYY-MM-DD)");
-			String hiredate = scanner.next(); 
-			
-			System.out.println("Enter employee Salary.");
-			double sal = scanner.nextDouble();
-			
-			System.out.println("Enter employee Commission.");
-			double comm = scanner.nextDouble();
-			
-			System.out.println("Enter employee department number");
-			int deptno = scanner.nextInt();
-			
-			return new Employee(empno, ename, job, manager, DateConverter(hiredate), sal, comm, deptno);
-		}
+		System.out.println("Enter Department Name.");
+		String dname = scanner.next();
 		
-		private static Date DateConverter(String dateString) {
-			String pattern = "yyyy-MM-dd";
+		System.out.println("Enter Department Loc");
+		String loc = scanner.next();
+		
+		return new Department(deptno, dname, loc);
+	}
+	
+	private static Employee createEmployee(Scanner scanner) {
+		System.out.println("Enter employee number.");
+		int empno = scanner.nextInt(); 
+		
+		System.out.println("Enter employee name.");
+		String ename = scanner.next();
+		
+		System.out.println("Enter employee job.");
+		String job = scanner.next();
+		
+		System.out.println("Enter manager's employee number.");
+		int manager = scanner.nextInt(); 
+		
+		System.out.println("Enter Hire Date (YYYY-MM-DD)");
+		String hiredate = scanner.next(); 
+		
+		System.out.println("Enter employee Salary.");
+		double sal = scanner.nextDouble();
+		
+		System.out.println("Enter employee Commission.");
+		double comm = scanner.nextDouble();
+		
+		System.out.println("Enter employee department number");
+		int deptno = scanner.nextInt();
+		
+		return new Employee(empno, ename, job, manager, DateConverter(hiredate), sal, comm, deptno);
+	}
+	
+	private static Date DateConverter(String dateString) {
+		String pattern = "yyyy-MM-dd";
 
-	        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
-	        try {
-	            java.util.Date utilDate = dateFormat.parse(dateString);
-	            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-	            return sqlDate;
-	        } catch (ParseException e) {
-	            e.printStackTrace();
-	        }
-	        return null;
+		SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+		try {
+		    java.util.Date utilDate = dateFormat.parse(dateString);
+		    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		    return sqlDate;
+		} catch (ParseException e) {
+		    e.printStackTrace();
 		}
+		return null;
+	}
 }
